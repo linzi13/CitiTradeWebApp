@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+<title>CitiTrade</title>
+
+<script type="text/javascript">
+
+        var request = myCreateXMLHttpRequest();
+
+        function myCreateXMLHttpRequest() {
+            try { return new ActiveXObject("Msxml2.XMLHTTP"); } catch (e) { }
+            try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch (e) { }
+            try { return new XMLHttpRequest(); } catch (e) { }
+            return null;
+        }
+
+        function myOnKeyUp() {
+
+            if (request != null) {
+                var textField = document.getElementById("myInputField");
+                var url = "rest/contacts?str=" + textField.value;
+				alert("Here");
+                request.open("GET", url, true);
+                request.onreadystatechange = myHandleCallback;
+                request.send(null);
+            }
+        }
+
+        function myHandleCallback() {
+
+            if (request.readyState == 4 && request.status == 200) {
+                var outputField = document.getElementById("myInputField");
+                outputField.innerHTML = request.responseText;
+            }
+        }
+
+        
+        
+
+    </script>
+</head>
+
+<body>
+    <h1>CitiTrade</h1>
+    Search:<input type="text" id="myInputField" list="Contacts" onkeyup="myOnKeyUp()" />
+</body>
+</html>
